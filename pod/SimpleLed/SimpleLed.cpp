@@ -8,7 +8,7 @@ Parameter p_knob1, p_knob2;
 int main(void)
 {
     hw.Init();
-    float r = 0, g = 0, b = 0;
+    float r = 0, g = 0, b = 1;
     p_knob1.Init(hw.knob1, 0, 1, Parameter::LINEAR);
     p_knob2.Init(hw.knob2, 0, 1, Parameter::LINEAR);
 

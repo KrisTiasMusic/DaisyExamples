@@ -47,7 +47,7 @@ void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
         noise_out = noise.Process();
         noise_out *= snr_env_out;
 
-        sig = .5 * noise_out + .5 * osc_out;
+        sig = .05 * noise_out + .1 * osc_out;
 
         out[i]     = sig;
         out[i + 1] = sig;
@@ -57,7 +57,7 @@ void AudioCallback(AudioHandle::InterleavingInputBuffer  in,
 void SetupDrums(float samplerate)
 {
     osc.Init(samplerate);
-    osc.SetWaveform(Oscillator::WAVE_TRI);
+    osc.SetWaveform(Oscillator::WAVE_SIN);
     osc.SetAmp(1);
 
     noise.Init();
@@ -65,18 +65,21 @@ void SetupDrums(float samplerate)
     snareEnv.Init(samplerate);
     snareEnv.SetTime(ADENV_SEG_ATTACK, .01);
     snareEnv.SetTime(ADENV_SEG_DECAY, .2);
+    snareEnv.SetCurve(-5);
     snareEnv.SetMax(1);
     snareEnv.SetMin(0);
 
     kickPitchEnv.Init(samplerate);
-    kickPitchEnv.SetTime(ADENV_SEG_ATTACK, .01);
-    kickPitchEnv.SetTime(ADENV_SEG_DECAY, .05);
-    kickPitchEnv.SetMax(400);
+    kickPitchEnv.SetTime(ADENV_SEG_ATTACK, .001);
+    kickPitchEnv.SetTime(ADENV_SEG_DECAY, .01);
+    kickPitchEnv.SetCurve(-10);
+    kickPitchEnv.SetMax(2000);
     kickPitchEnv.SetMin(50);
 
     kickVolEnv.Init(samplerate);
     kickVolEnv.SetTime(ADENV_SEG_ATTACK, .01);
-    kickVolEnv.SetTime(ADENV_SEG_DECAY, 1);
+    kickVolEnv.SetTime(ADENV_SEG_DECAY, .5);
+    kickVolEnv.SetCurve(-3);
     kickVolEnv.SetMax(1);
     kickVolEnv.SetMin(0);
 }
