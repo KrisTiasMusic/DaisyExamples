@@ -7,35 +7,34 @@ using namespace daisysp;
 
 DaisyPod hw;
 
+int sizeImpulse = sizeof(impulseResponse[0]) / sizeof(float);
 
+float* hL = impulseResponse[0];
+float* hR = impulseResponse[1];
 
 void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, size_t sizeBuffer)
 {
 	hw.ProcessAllControls();
-
-	auto impulseResponse = getImpulseResponse();
-
-	float* h = impulseResponse.first;
-	int sizeImpulse = impulseResponse.second;
+	
 	
 
 	for (size_t i = 0; i < sizeBuffer; i++)
 	{
-		for (int j = 0; j < sizeImpulse; i++)
-		{
-			out[0][i] = 0.f;
-			out[1][i] = 0.f;
+		// out[0][i] = in[0][i];
+		// out[1][i] = in[1][i];
+		out[0][i] = 0.f;
+		out[1][i] = 0.f;
+		
 
+		for (int j = 0; j < sizeImpulse; j++)
+		{
+			
 			if (!((i-j < 0) || i-j > sizeBuffer) && hw.button1.Pressed())
 			{
-				out[0][i] = out[0][i] + h[0][j] * in[0][i-j];
-				out[1][i] = out[1][i] + h[1][j] * in[1][i-j];
+				out[0][i] = out[0][i]; + hL[j] * in[0][i-j];
+				out[1][i] = out[1][i]; + hR[j] * in[1][i-j];
 			}
-			else
-			{
-				out[0][i] = in[0][i];
-				out[1][i] = in[1][i];
-			}
+			
 		}
 	}
 }

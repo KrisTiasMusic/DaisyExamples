@@ -1,6 +1,6 @@
 #pragma once
 
-float impulseResponse[2][2026] = 
+static float impulseResponse[2][2026] = 
 {
     // left channel
     {
@@ -4062,9 +4062,4 @@ float impulseResponse[2][2026] =
 };
 
 
-std::pair<float*, int> getImpulseResponse()
-{
-    int sizeOfImpulse = sizeof(impulseResponse[0]) / sizeof(float);
-    std::pair<float*, int> impulseResponseAndSize(&impulseResponse, sizeOfImpulse);
-    return impulseResponseAndSize;
-}
+
