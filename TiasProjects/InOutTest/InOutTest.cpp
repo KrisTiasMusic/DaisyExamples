@@ -20,22 +20,22 @@ void AudioCallback(AudioHandle::InputBuffer in, AudioHandle::OutputBuffer out, s
 
 	for (size_t i = 0; i < sizeBuffer; i++)
 	{
-		// out[0][i] = in[0][i];
-		// out[1][i] = in[1][i];
-		out[0][i] = 0.f;
-		out[1][i] = 0.f;
+		out[0][i] = in[0][i];
+		out[1][i] = in[1][i];
+		// out[0][i] = 0.f;
+		// out[1][i] = 0.f;
 		
 
-		for (int j = 0; j < sizeImpulse; j++)
-		{
+		// for (int j = 0; j < sizeImpulse; j++)
+		// {
 			
-			if (!((i-j < 0) || i-j > sizeBuffer) && hw.button1.Pressed())
-			{
-				out[0][i] = out[0][i]; + hL[j] * in[0][i-j];
-				out[1][i] = out[1][i]; + hR[j] * in[1][i-j];
-			}
+		// 	if (!((i-j < 0) || i-j > sizeBuffer) && hw.button1.Pressed())
+		// 	{
+		// 		out[0][i] = out[0][i] + hL[j] * in[0][i-j];
+		// 		out[1][i] = out[1][i] * 0.5f + hR[j] * in[1][i-j] * 0.5f;
+		// 	}
 			
-		}
+		// }
 	}
 }
 
